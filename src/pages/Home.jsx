@@ -1,13 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2, ShieldCheck, Factory, Sparkles } from 'lucide-react'
+import { ArrowRight, CheckCircle2, ShieldCheck, GitMerge, Sparkles } from 'lucide-react'
 import Button from '../components/ui/Button.jsx'
 import SectionTitle from '../components/SectionTitle.jsx'
 import { Card, CardBody } from '../components/ui/Card.jsx'
 import { stats } from '../data/stats.js'
 import { products } from '../data/products.js'
 import { company } from '../data/company.js'
-import { useInView } from '../hooks/useInView.js'
 import { useCountUp } from '../hooks/useCountUp.js'
 import brand1 from "../assets/milltex.png";
 import brand2 from "../assets/normann.jpg";
@@ -21,7 +20,7 @@ import ref2 from '../assets/productpage17.png'
 import ref3 from '../assets/productpage4.png'
 import ref4 from '../assets/productpage10.png'
 import ref5 from '../assets/productpage6.png'
-import ref6 from '../assets/productpage7.png'
+import ref6 from '../assets/productpage9.png'
 
 
 const brands = [
@@ -43,31 +42,65 @@ const imageByKey = {
 }
 
 function StatCard({ item }) {
-  const { ref, inView } = useInView({ threshold: 0.35 })
-  const val = useCountUp({ start: 0, end: item.value, durationMs: 1200, enabled: inView })
+  const ref = React.useRef(null);
+  const [inView, setInView] = React.useState(false);
+
+  // ✅ Observe enter + leave so it can replay again and again
+  React.useEffect(() => {
+    if (!ref.current) return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0.35 }
+    );
+
+    obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+
+  // ✅ Force the counter to restart every time it comes back into view
+  const [runKey, setRunKey] = React.useState(0);
+
+  React.useEffect(() => {
+    if (inView) {
+      setRunKey((k) => k + 1); // entering -> restart
+    }
+  }, [inView]);
+
+  const val = useCountUp({
+    start: 0,
+    end: item.value,
+    durationMs: 1200,
+    enabled: inView, // if your hook respects enabled, good. If not, runKey still forces remount.
+  });
 
   return (
-    <div ref={ref} className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-soft backdrop-blur">
-      {/* Heading (Label) FIRST */}
+    <div
+      ref={ref}
+      className={[
+        "rounded-2xl border border-white/10 bg-white/5 p-6 shadow-soft backdrop-blur",
+        "transition-all duration-500 will-change-transform",
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+      ].join(" ")}
+    >
       <div className="text-base font-extrabold tracking-tight text-white">
-  {item.label}
-</div>
+        {item.label}
+      </div>
 
-
-      {/* Number SECOND */}
-      <div className="mt-2 text-3xl font-extrabold tracking-tight text-white">
+      {/* ✅ remount this block every time it re-enters view */}
+      <div key={runKey} className="mt-2 text-3xl font-extrabold tracking-tight text-white">
         {val.toLocaleString()}
         <span className="text-white/80">{item.suffix}</span>
       </div>
 
-      {/* Note stays same */}
       <div className="mt-2 text-xs leading-5 text-white/60">
         {item.note}
       </div>
     </div>
-  )
+  );
 }
-
 
 function ProductPreviewCard({ p }) {
   const img1 = imageByKey[p.imageKeys.primary];
@@ -128,22 +161,22 @@ export default function Home() {
         <div className="container-app relative py-16 sm:py-20">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white/80">
+              <div className="inline-flex font-mont items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white/80">
                 <ShieldCheck size={16} /> OEM Manufacturing · Global Buyers .
               </div>
-      <h1 className="mt-5 font-mont text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-  Built to scale.{" "}
-  <span className="whitespace-nowrap">Made to last.</span>
-  <br className="hidden sm:block" />
-  Ready to export.
+    <h1 className="mt-5 font-mont text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+  <span className="block">Built to scale.</span>
+  <span className="block">Made to last.</span>
+  <span className="block">Ready to export.</span>
 </h1>
+
 
 
               <p className="mt-4 max-w-xl font-playfair text-base leading-7 text-white/80">
                 {company.intro.blurb}
               </p>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-7 flex font-mont flex-col gap-3 sm:flex-row">
                 <Button
                   as="a"
                   href={`mailto:${company.email}?subject=Inquiry%20%E2%80%94%20Jubilee%20Apparel`}
@@ -156,12 +189,12 @@ export default function Home() {
                 </Button>
               </div>
 
-             <div className="mt-7 grid gap-3 sm:grid-cols-2">
+             <div className="mt-7 font-mont font-semibold grid gap-3 sm:grid-cols-2">
   {[
     {
-      icon: <Factory size={18} />,
-      title: "4 Manufacturing Sites",
-      desc: "150,000+ sq. ft. integrated production footprint"
+      icon: <GitMerge size={18} />,
+      title: "End-to-End Control",
+      desc: "Knitting to finishing coordinated under one supply chain"
     },
     {
       icon: <Sparkles size={18} />,
@@ -180,12 +213,12 @@ export default function Home() {
 
         <div className="min-w-0">
           {/* Title */}
-          <div className="text-[15px] font-semibold tracking-[-0.01em] text-white">
+          <div className="text-[15px] font-mont font-semibold tracking-[-0.01em] text-white">
             {item.title}
           </div>
 
           {/* Desc */}
-          <div className="mt-1 text-[13px] leading-relaxed text-white/70">
+          <div className="mt-1 text-[13px]  font-playfair font-semibold leading-relaxed text-white/70">
             {item.desc}
           </div>
         </div>
@@ -196,44 +229,54 @@ export default function Home() {
 
             </div>
 
-            <div className="relative">
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft">
-                <img src={ref2} alt="Jubilee Apparel preview" className="h-[360px] w-full object-cover opacity-90" />
-              </div>
-              <div className="pointer-events-none absolute -bottom-5 -left-5 hidden w-72 animate-floaty rounded-2xl border border-white/10 bg-white/5 p-5 text-white shadow-soft backdrop-blur lg:block">
-                <div className="flex items-center gap-2 text-sm font-extrabold">
-                  <CheckCircle2 size={18} /> Compliance-ready production
-                </div>
-                <div className="mt-2 text-xs text-white/60">
-OEM-ready manufacturing built to meet global buyer standards.                </div>
-              </div>
-            </div>
+            <div className="relative self-start">
+  <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft ">
+    <img
+      src={ref2}
+      alt="Jubilee Apparel preview"
+      className="h-[360px] w-full object-cover opacity-90 "
+    />
+  </div>
+
+  <div className="pointer-events-none font-mont absolute -bottom-5 -left-5 hidden w-72 animate-floaty rounded-2xl border border-white/10 bg-white/5 p-5 text-white shadow-soft backdrop-blur lg:block">
+    <div className="flex items-center gap-2 text-sm font-extrabold">
+      <CheckCircle2 size={18} /> Compliance-ready production
+    </div>
+    <div className="mt-2 text-xs font-playfair text-white/60">
+      OEM-ready manufacturing built to meet global buyer standards.
+    </div>
+  </div>
+</div>
+
           </div>
 
           {/* Stats */}
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map((s) => (
-              <StatCard key={s.label} item={s} />
-            ))}
-          </div>
+          <div className="mt-12 grid gap-4 font-mont font-semibold sm:grid-cols-2 lg:grid-cols-4">
+  {stats.map((s) => (
+    <StatCard key={s.label} item={s} />
+  ))}
+</div>
+
         </div>
       </section>
 
      {/* Value chain (Timeline teaser — Home) */}
 <section className="bg-white mt-6">
-  <div className="container-app py-16 font-mont font-bold ">
+  <div className="container-app py-16 font-mont font-extrabold">
     <SectionTitle
-      eyebrow="Under one roof"
-      title="From fabric to export — under one roof"
-      desc="A streamlined value chain built to reduce handoffs, minimize wastage, and deliver export-ready garments on time."
+     align="center"
+      eyebrow="Manufacturing Under One Roof"
+      title="From Fabric To Export — Under One Roof"
+      desc="A streamlined value chain built to reduce handoffs and deliver export-ready garments on time."
     />
 
-    {/* Timeline / Steps */} 
+    {/* Timeline / Steps */}
     <div className="relative mt-10">
       {/* connector line (desktop) */}
       <div className="absolute left-0 right-0 top-7 hidden h-px bg-ink-900/50 lg:block" />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+      {/* ✅ 5 steps => 5 columns on lg (so the line doesn't look "extra") */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {[
           {
             title: "Knitting",
@@ -256,13 +299,8 @@ OEM-ready manufacturing built to meet global buyer standards.                </d
             bullets: ["Auto-trim support", "Clean seams", "Consistent sizing"],
           },
           {
-            title: "Stitching (Wovens)",
-            desc: "Dedicated woven unit for versatile woven categories.",
-            bullets: ["Workwear & casual", "Stable construction", "Production discipline"],
-          },
-          {
             title: "Ready to export",
-            desc: "QC, labeling, and pack-ready delivery for global buyers.",
+            desc: "From final approval to shipment staging—everything aligned to buyer requirements.",
             bullets: ["Quality checks", "Labeling & tagging", "Export-ready packing"],
           },
         ].map((step, idx) => (
@@ -280,12 +318,13 @@ OEM-ready manufacturing built to meet global buyer standards.                </d
               Step {idx + 1}
             </div>
 
-            <div className="mt-3 text-sm font-extrabold text-ink-900">
+            {/* ✅ ONLY heading centered */}
+            <div className="mt-3 text-sm font-extrabold text-ink-900 text-center">
               {step.title}
             </div>
-            <div className="mt-2 text-xs leading-5 text-ink-700">
-              {step.desc}
-            </div>
+
+            {/* keep rest as-is (left/aligned) */}
+            <div className="mt-2 text-xs leading-5 text-ink-700">{step.desc}</div>
 
             <ul className="mt-4 space-y-2 text-xs text-ink-700">
               {step.bullets.map((b) => (
@@ -301,7 +340,7 @@ OEM-ready manufacturing built to meet global buyer standards.                </d
     </div>
 
     {/* CTA */}
-    <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+    <div className="mt-10 flex flex-col font-mont font-bold gap-3 sm:flex-row sm:items-center">
       <Button as={Link} to="/capabilities" variant="primary">
         Explore Full Facilities <ArrowRight size={18} />
       </Button>
@@ -310,7 +349,7 @@ OEM-ready manufacturing built to meet global buyer standards.                </d
         Request a quote
       </Button>
 
-      <div className="text-xs text-ink-600 sm:ml-2">
+      <div className="text-xs text-ink-600 font-mont font-extrabold sm:ml-2">
         Prefer email?{" "}
         <a
           href="mailto:info@jubilee-apparel.com"
@@ -323,50 +362,16 @@ OEM-ready manufacturing built to meet global buyer standards.                </d
   </div>
 </section>
 
-      {/* Capability highlights
-      <section className="bg-brand-50">
-        <div className="container-app py-16">
-          <SectionTitle
-            eyebrow="Capability highlights"
-            title="Built for performance, consistency, and speed"
-            desc="From advanced cutting to specialized stitching, our setup supports scalable programs across knits and wovens."
-          />
 
-          <div className="mt-10 grid gap-4 lg:grid-cols-3">
-            {capabilities.slice(0, 3).map((c) => (
-              <Card key={c.id} className="bg-white">
-                <CardBody>
-                  <div className="text-sm font-extrabold text-ink-900">{c.title}</div>
-                  <div className="mt-1 text-xs font-semibold text-brand-800">{c.highlight}</div>
-                  <p className="mt-3 text-xs leading-5 text-ink-700">{c.body}</p>
-                  <div className="mt-5 grid grid-cols-3 gap-2">
-                    {c.metrics.map((m) => (
-                      <div key={m.k} className="rounded-xl border border-ink-900/10 bg-ink-50 p-3">
-                        <div className="text-[10px] font-bold text-ink-500">{m.k}</div>
-                        <div className="mt-1 text-xs font-extrabold text-ink-900">{m.v}</div>
-                      </div>
-                    ))}
-                  </div>
-                </CardBody>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-8">
-            <Button as={Link} to="/capabilities" variant="ghost">
-              View full manufacturing facility details <ArrowRight size={18} />
-            </Button>
-          </div>
-        </div>
-      </section> */}
+   
 {/* Our Satisfied Customers — Full width marquee (no box) */}
 <section className="bg-brand-50 py-16 mt-6">
 <div className="container-app text-center">
-  <h2 className="text-3xl font-extrabold text-ink-900 font-mont">
+  <h2 className="text-3xl font-extrabold text-ink-900 font-mont ">
     Our Satisfied Customers
   </h2>
 
-  <p className="mx-auto mt-2 max-w-2xl text-sm text-ink-700 font-playfair">
+  <p className="mx-auto mt-2 max-w-2xl text-sm font-semibold text-ink-700 font-playfair">
     Brands and sourcing teams we’ve supported with consistent OEM production.
   </p>
 </div>
@@ -377,30 +382,41 @@ OEM-ready manufacturing built to meet global buyer standards.                </d
     <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-brand-50 to-transparent" />
     <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-brand-50 to-transparent" />
 
-    <div className="flex w-max flex-nowrap items-center gap-16 animate-scroll will-change-transform">
-      {/* First set */}
-      {brands.map((b) => (
-        <img
-          key={`a-${b.name}`}
-          src={b.logo}
-          alt={b.name}
-className="h-16 sm:h-20 md:h-24 w-auto object-contain shrink-0 opacity-90 transition hover:opacity-100"
-          loading="lazy"
-        />
-      ))}
-
-      {/* Duplicate set (for seamless loop) */}
-      {brands.map((b) => (
-        <img
-          key={`b-${b.name}`}
-          src={b.logo}
-          alt=""
-          aria-hidden="true"
-className="h-16 sm:h-20 md:h-24 w-auto object-contain shrink-0 opacity-90 transition hover:opacity-100"
-          loading="lazy"
-        />
-      ))}
+   <div className="flex w-max flex-nowrap items-center gap-10 sm:gap-12 md:gap-16 animate-scroll will-change-transform">
+  {/* First set */}
+  {brands.map((b) => (
+    <div
+      key={`a-${b.name}`}
+      className="shrink-0 flex items-center justify-center
+                 h-24 w-36 sm:h-24 sm:w-44 md:h-28 md:w-52"
+    >
+      <img
+        src={b.logo}
+        alt={b.name}
+        loading="lazy"
+        className="max-h-full max-w-full object-contain opacity-90 transition hover:opacity-100"
+      />
     </div>
+  ))}
+
+  {/* Duplicate set */}
+  {brands.map((b) => (
+    <div
+      key={`b-${b.name}`}
+      className="shrink-0 flex items-center justify-center
+                 h-24 w-36 sm:h-24 sm:w-44 md:h-28 md:w-52"
+      aria-hidden="true"
+    >
+      <img
+        src={b.logo}
+        alt=""
+        loading="lazy"
+        className="max-h-full max-w-full object-contain opacity-90 transition hover:opacity-100"
+      />
+    </div>
+  ))}
+</div>
+
   </div>
 </section>
 
@@ -408,14 +424,16 @@ className="h-16 sm:h-20 md:h-24 w-auto object-contain shrink-0 opacity-90 transi
 
       {/* Products preview */}
       <section className="bg-white mt-6">
-        <div className="container-app py-16 font-mont font-bold">
-          <SectionTitle
-            eyebrow="Product preview"
-            title="Knits & wovens for global buyers"
-            desc="This is a showcase grid. You can add as many products as you like — the layout stays responsive for desktop and mobile."
-          />
+        <div className="container-app py-16 font-mont font-extrabold">
+         <SectionTitle
+  align="center"
+  eyebrow="Product preview"
+  title="Best-Selling OEM Categories"
+  desc="Proven styles that scale smoothly from sampling to shipment."
+/>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+
+          <div className="mt-10 grid font-playfair font-semibold gap-5 md:grid-cols-2 lg:grid-cols-3">
             {products.slice(0, 3).map((p) => (
               <ProductPreviewCard key={p.id} p={p} />
             ))}
@@ -423,10 +441,10 @@ className="h-16 sm:h-20 md:h-24 w-auto object-contain shrink-0 opacity-90 transi
 
           <div className="mt-10 flex flex-col items-start justify-between gap-4 rounded-2xl border border-ink-900/10 bg-ink-900 p-8 text-white shadow-soft md:flex-row md:items-center">
             <div>
-              <div className="text-lg font-extrabold">Need a custom program or bulk quote?</div>
-              <div className="mt-1 text-sm text-white/70">Share your tech pack, quantities, and target dates — we’ll respond fast.</div>
+              <div className="text-lg  font-mont font-extrabold">Need a custom program or bulk quote?</div>
+              <div className="mt-1 font-mont font-semibold text-sm text-white/70">Share your tech pack, quantities, and target dates — we’ll respond fast.</div>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col font-mont font-semibold gap-3 sm:flex-row">
               <Button as={Link} to="/products" variant="secondary">Explore products</Button>
               <Button as="a" href={`mailto:${company.email}?subject=RFQ%20%E2%80%94%20Jubilee%20Apparel`} variant="primary">
                 Send RFQ <ArrowRight size={18} />

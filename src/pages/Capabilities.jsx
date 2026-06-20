@@ -114,65 +114,78 @@ const embellishment = [
     id: "embroidery",
     title: "Embroidery",
     body:
-      "Clean, durable embroidery for logos, badges, and premium brand marks—ideal for uniforms, workwear, and retail programs.",
-    highlight: "Best for logos & patches • Long-wear finish",
+      "Full-service embroidery for all garment types—logos, monograms, patches, and decorative stitching with clean finishing and consistent quality.",
+    highlight: "All embroidery styles • Placement & thread matching support",
     highlightImage: emb1,
     metrics: [
-      { k: "Best for", v: "Logos, badges" },
-      { k: "Look", v: "Premium texture" },
-      { k: "Durability", v: "High" },
+      { k: "Machines", v: "6" },
+      { k: "Output", v: "Bulk + sampling" },
+      { k: 'Edge', v: 'Precision + utilization' },
     ],
   },
   {
     id: "screen",
-    title: "Screen Printing",
+    title: "Screen Printing(Oval)",
     body:
-      "Cost-effective, high-volume printing with strong color payoff—great for promotional runs, uniforms, and seasonal collections.",
-    highlight: "Bulk-friendly • Strong color coverage",
+      "End-to-end screen printing with consistent shade, coverage, and wash performance—supported from sampling to bulk production.",
+    highlight: "Multi-color capable • Quality checked before packing",
     highlightImage: emb2,
     metrics: [
-      { k: "Best for", v: "Bulk runs" },
-      { k: "Finish", v: "Solid, bold" },
-      { k: "Use case", v: "Promo + uniform" },
+      { k: "Machines", v: "1" },
+      { k: "Capacity/Day", v: "10,000 Pcs " },
+      { k: 'Edge', v: 'Precision + utilization' },
     ],
   },
   {
     id: "dtg",
-    title: "DTG Print",
+    title: "DTG Printing",
     body:
-      "Direct-to-garment printing for detailed, full-color artwork—best for small batches, sampling, and fast concept approvals.",
-    highlight: "High detail • Great for sampling",
+      "High-resolution DTG printing for detailed artwork and smooth hand-feel—ideal for quick approvals, sampling, and smaller production runs.",
+    highlight: "High detail output • Fast concept approval support",
     highlightImage: emb3,
     metrics: [
-      { k: "Best for", v: "Detailed art" },
-      { k: "Batch size", v: "Small" },
-      { k: "Speed", v: "Fast setup" },
+      { k: "Machines", v: "2" },
+      { k: "Capacity/Day", v: "2500 Pcs" },
+      { k: 'Edge', v: 'Precision + utilization' },
     ],
   },
   {
-    id: "dtf",
-    title: "DTF Print",
+    id: "dtg",
+    title: "DTF Printing ",
     body:
-      "Direct-to-film transfer printing for vibrant graphics with strong adhesion—works across many fabric types and blends.",
-    highlight: "Vibrant colors • Versatile fabrics",
+      "DTF printing for vibrant graphics and reliable durability—works across a wide range of fabrics, blends, and product categories.",
+    highlight: "Vibrant & durable • Broad fabric compatibility",
     highlightImage: emb4,
     metrics: [
-      { k: "Best for", v: "Multi-fabric" },
-      { k: "Feel", v: "Smooth" },
-      { k: "Performance", v: "Strong adhesion" },
+      { k: "Machines", v: "2" },
+      { k: "Capacity/Day", v: "3500 Pcs" },
+      { k: 'Edge', v: 'Precision + utilization' },
+    ],
+  },
+   {
+    id: "uvdtf",
+    title: "DTF Printing(Fluroscent)",
+    body:
+      "DTF Printing(Fluroscent) for premium presentation—clean transfers for trims, packaging elements, labels, and special applications as required by the program.",
+    highlight: "Premium branding finish • Program-based applications",
+    highlightImage: emb5,
+    metrics: [
+      { k: "Machines", v: "2" },
+      { k: "Capacity/Day", v: "3500 Pcs" },
+      { k: 'Edge', v: 'Precision + utilization' },
     ],
   },
   {
     id: "uvdtf",
-    title: "UV DTF",
+    title: "UV DTF Printing",
     body:
-      "UV-cured transfer option for hard-surface branding and special trims—useful for premium packaging, accessories, and labeling needs.",
-    highlight: "Hard surfaces • Premium branding",
+      "UV DTF branding for premium presentation—clean transfers for trims, packaging elements, labels, and special applications as required by the program.",
+    highlight: "Premium branding finish • Program-based applications",
     highlightImage: emb5,
     metrics: [
-      { k: "Best for", v: "Hard surfaces" },
-      { k: "Finish", v: "Gloss / matte" },
-      { k: "Use case", v: "Packaging + trims" },
+      { k: "Machines", v: "1" },
+      { k: "Capacity/Day", v: "12000 Patches" },
+      { k: 'Edge', v: 'Precision + utilization' },
     ],
   },
 ];
@@ -224,12 +237,12 @@ export default function Capabilities() {
       {/* HERO */}
       <section className="bg-ink-900">
         <div className="container-app py-14 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white/80 mt-3">
+          <div className="inline-flex items-center gap-2 font-mont rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white/80 mt-3">
             Manufacturing Facility
           </div>
 
-          <h1 className="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl">
-            Facilities
+          <h1 className="mt-5 text-4xl font-mont font-black tracking-tight text-white sm:text-5xl">
+            Capabilities
           </h1>
         </div>
 
@@ -244,18 +257,14 @@ export default function Capabilities() {
             <div className="lg:col-span-1">
               <div className="sticky top-28 space-y-4">
                 <div className="rounded-2xl border border-ink-900/10 bg-ink-50 p-6">
-                  <div className="text-sm font-extrabold text-ink-900">
-                    At a glance
+                  <div className="text-sm font-extrabold font-mont text-ink-900">
+                    Equipments Overview
                   </div>
-                  <p className="mt-2 text-sm text-ink-700">
-                    Integrated operations support consistent output and export-ready presentation.
-                    Scroll to explore each capability—image updates automatically.
-                  </p>
                 </div>
 
                 <div className="overflow-hidden rounded-2xl border border-ink-900/10 bg-white shadow-soft">
                   <div className="px-5 pt-5">
-                    <div className="text-xs font-bold text-ink-500">
+                    <div className="text-xs font-bold font-mont text-ink-500">
                       Now viewing
                     </div>
                     <div className="mt-1 text-sm font-extrabold text-ink-900">
@@ -277,11 +286,6 @@ export default function Capabilities() {
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/10 to-transparent" />
                     </div>
                   </div>
-
-                  <div className="px-5 py-4 text-xs text-ink-600">
-                    Tip: Replace images per capability in{" "}
-                    <code>capabilities.js</code>.
-                  </div>
                 </div>
               </div>
             </div>
@@ -299,7 +303,7 @@ export default function Capabilities() {
                     <CardBody>
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                         <div>
-                          <div className="text-lg font-extrabold text-ink-900">
+                          <div className="text-lg font-extrabold font-mont text-ink-900">
                             {c.title}
                           </div>
                         </div>
@@ -308,12 +312,12 @@ export default function Capabilities() {
                           {c.metrics.map((m) => (
                             <div
                               key={m.k}
-                              className="rounded-xl border border-ink-900/10 bg-ink-50 p-3"
+                              className="rounded-xl border font-mont border-ink-900/10 bg-ink-50 p-3"
                             >
-                              <div className="text-[10px] font-bold text-ink-500">
+                              <div className="text-[10px] font-bold font-mont text-ink-500">
                                 {m.k}
                               </div>
-                              <div className="mt-1 text-xs font-extrabold text-ink-900">
+                              <div className="mt-1 text-xs  font-mont font-extrabold text-ink-900">
                                 {m.v}
                               </div>
                             </div>
@@ -328,7 +332,7 @@ export default function Capabilities() {
                       <div className="mt-5 overflow-hidden rounded-2xl border border-brand-100 bg-brand-50">
                         <div className="grid gap-4 p-5 sm:grid-cols-[1fr_190px] sm:items-center">
                           <div>
-                            <div className="text-xs font-bold text-brand-800 font-playfair">
+                            <div className="text-xs font-bold  text-brand-800 font-playfair">
                               Capacity highlight
                             </div>
                             <div className="mt-1 text-sm text-ink-800">
@@ -356,16 +360,16 @@ export default function Capabilities() {
               <div className="pt-10">
                 <div className="flex items-center gap-4">
                   <div className="h-px flex-1 bg-ink-900/10" />
-                  <div className="rounded-full border border-ink-900/10 bg-ink-50 px-4 py-2 text-xs font-bold text-ink-700">
+                  <div className="rounded-full border font-mont  border-ink-900/10 bg-ink-50 px-4 py-2 text-xs font-bold text-ink-700">
                     ADD-ON SERVICES
                   </div>
                   <div className="h-px flex-1 bg-ink-900/10" />
                 </div>
 
-                <h2 className="mt-4 text-center text-2xl font-black tracking-tight text-ink-900 sm:text-3xl">
+                <h2 className="mt-4 text-center text-2xl font-mont  font-black tracking-tight text-ink-900 sm:text-3xl">
                   Printing & Embellishment
                 </h2>
-                <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-ink-700">
+                <p className="mx-auto mt-2 max-w-2xl font-playfair font-semibold text-center text-sm text-ink-700">
                   Brand-ready decoration options to support retail presentation, uniforms, promotions, and export programs.
                 </p>
               </div>
@@ -382,7 +386,7 @@ export default function Capabilities() {
                       <CardBody>
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                           <div>
-                            <div className="text-lg font-extrabold text-ink-900">
+                            <div className="text-lg font-mont font-extrabold text-ink-900">
                               {c.title}
                             </div>
                           </div>
@@ -391,12 +395,12 @@ export default function Capabilities() {
                             {c.metrics.map((m) => (
                               <div
                                 key={m.k}
-                                className="rounded-xl border border-ink-900/10 bg-ink-50 p-3"
+                                className="rounded-xl border font-mont border-ink-900/10 bg-ink-50 p-3"
                               >
-                                <div className="text-[10px] font-bold text-ink-500">
+                                <div className="text-[10px] font-playfair font-bold text-ink-500">
                                   {m.k}
                                 </div>
-                                <div className="mt-1 text-xs font-extrabold text-ink-900">
+                                <div className="mt-1 text-xs font-playfair font-extrabold text-ink-900">
                                   {m.v}
                                 </div>
                               </div>
@@ -411,10 +415,10 @@ export default function Capabilities() {
                         <div className="mt-5 overflow-hidden rounded-2xl border border-brand-100 bg-brand-50">
                           <div className="grid gap-4 p-5 sm:grid-cols-[1fr_190px] sm:items-center">
                             <div>
-                              <div className="text-xs font-bold text-brand-800">
+                              <div className="text-xs font-bold font-mont text-brand-800">
                                 Capacity highlight
                               </div>
-                              <div className="mt-1 text-sm text-ink-800">
+                              <div className="mt-1 text-sm font-playfair font-semibold text-ink-800">
                                 {c.highlight}
                               </div>
                             </div>

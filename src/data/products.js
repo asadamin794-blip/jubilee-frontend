@@ -1,7 +1,7 @@
 export const products = [
   {
     id: 'T-SHIRT',
-    name: 'Classic T-Shirt',
+    name: 'T-Shirts ',
     category: 'T-SHIRT',
     description:
       'Soft, breathable T-shirts built for consistent fit, clean finishing, and dependable bulk production.',
@@ -15,10 +15,10 @@ export const products = [
   },
   {
     id: 'Hoodies ',
-    name: 'Pullover&Zipper Hoodie',
+    name: 'Fleece Pullover Hoodie & Sherpa Zipper Hoodie',
     category: 'Hoodies',
     description:
-      'Comfortable Pullover&Zipper with durable construction and a consistent fit.',
+      'Comfortable Pullover & Zipper with durable construction and a consistent fit.',
     imageKeys: { primary: 'ref3', secondary: 'ref4' },
     colors: [
       { name: 'White', hex: '#ffffff' },
@@ -28,10 +28,10 @@ export const products = [
   },
   {
     id: 'Sweatshirts',
-    name: 'Nantucket&Fleece',
+    name: 'Nantucket Sweatshirt & Fleece Sweatshirt',
     category: 'SweatShirts',
     description:
-      'Midweight Fleece&Nantucket hoodies with reinforced seams and smooth hand-feel. Built for comfort and durability.',
+      'Midweight Fleece & Nantucket hoodies with reinforced seams and smooth hand-feel. Built for comfort and durability.',
     imageKeys: { primary: 'ref5', secondary: 'ref6' },
     colors: [
       { name: 'Black', hex: '#111111' },

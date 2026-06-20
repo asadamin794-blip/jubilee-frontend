@@ -360,25 +360,25 @@ export default function Contact() {
           {/* Contact info / address */}
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             <div className="rounded-2xl border border-ink-900/10 bg-white p-6 shadow-soft">
-              <div className="flex items-center gap-2 text-sm font-black text-ink-900">
+              <div className="flex items-center gap-2 text-sm font-black text-ink-900 justify-center">
                 <Mail size={16} className="text-brand-700 font-mont" /> Email
               </div>
-              <a className="mt-2 block text-sm font-semibold text-ink-700 hover:text-ink-900" href={`mailto:${company.email}`}>
+              <a className="mt-2 block text-sm font-semibold  text-ink-700 hover:text-ink-900" href={`mailto:${company.email}`}>
                 {company.email}
               </a>
               <div className="mt-2 text-xs text-ink-600 font-playfair">Primary channel for inquiries and meeting confirmations.</div>
             </div>
 
             <div className="rounded-2xl border border-ink-900/10 bg-white p-6 shadow-soft">
-              <div className="flex items-center gap-2 text-sm font-black text-ink-900">
-                <MapPin size={16} className="text-brand-700 font-mont" /> Address
+              <div className="flex items-center gap-2 text-sm font-black text-ink-900 justify-center">
+                <MapPin size={16} className="text-brand-700 font-mont " /> Address
               </div>
-              <div className="mt-2 text-sm font-semibold text-ink-700">{company.addressShort}</div>
+              <div className="mt-2 text-sm font-playfair font-semibold text-ink-700">{company.addressShort}</div>
               <div className="mt-2 text-xs text-ink-600">(later will add AB.)</div>
-            </div>
+            </div> 
 
             <div className="rounded-2xl border border-ink-900/10 bg-white p-6 shadow-soft">
-              <div className="flex items-center gap-2 text-sm font-black text-ink-900">
+              <div className="flex items-center gap-2 text-sm font-black text-ink-900 justify-center">
                 <PhoneCall size={16} className="text-brand-700 font-mont" /> Office
               </div>
               <div className="mt-2 text-sm font-semibold text-ink-700">{company.phone}</div>

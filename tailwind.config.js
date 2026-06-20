@@ -6,8 +6,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        mont: ['Lato', 'sans-serif'],
-        playfair: ['"Roboto"', 'serif'],
+        mont: ['Montserrat'],
+        playfair: ['Roboto'],
       },
 
       colors: {

@@ -13,6 +13,8 @@ import Contact from './pages/Contact.jsx'
 import NotFound from './pages/NotFound.jsx'
 import Policy from './pages/prolicy.jsx'
 import Faq from './pages/faq.jsx'
+import ScrollTopButton from "./components/ui/ScrollTopButton.jsx"
+
 export default function App() {
   return (
     <div className="min-h-screen">
@@ -33,6 +35,7 @@ export default function App() {
       </main>
       <Footer />
       <Chatbot />
+       <ScrollTopButton />
     </div>
   )
 }

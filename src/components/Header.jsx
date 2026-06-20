@@ -7,7 +7,7 @@ import BookCallModal from "./BookCallModal.jsx";
 
 const nav = [
   { name: "Home", to: "/" },
-  { name: "About", to: "/about" },
+  { name: "Who We Are", to: "/about" },
   { name: "Capabilities", to: "/capabilities" },
   { name: "Products", to: "/products" },
   { name: "Contact", to: "/contact" },
@@ -76,7 +76,7 @@ export default function Header() {
 
               {/* ✅ Desktop: show text next to logo (left) */}
               <div className="hidden lg:block">
-                <div className="text-amber-50 font-extrabold tracking-wide font-mont leading-tight">
+<div className="text-white font-extrabold tracking-wide font-mont leading-tight drop-shadow-sm">
                   Jubilee Apparel
                 </div>
                 <div className="text-xs text-white/60 font-mont -mt-0.5">
@@ -87,7 +87,7 @@ export default function Header() {
 
             {/* ✅ Mobile-only centered text */}
             <Link to="/" className="block text-center lg:hidden">
-              <div className="text-amber-50 font-extrabold tracking-wide font-mont leading-tight">
+ <div className="text-white font-extrabold tracking-wide font-mont leading-tight drop-shadow-sm">
                 Jubilee Apparel
               </div>
               <div className="text-xs text-white/60 font-mont -mt-0.5">
@@ -97,7 +97,7 @@ export default function Header() {
 
             {/* Mobile menu icon */}
             <button
-              className="inline-flex items-center justify-end rounded-xl p-2 text-white/80 hover:bg-white/10 hover:text-white lg:hidden"
+              className="inline-flex items-center font-mont font-extrabold justify-end rounded-xl p-2 text-white/80 hover:bg-white/10 hover:text-white lg:hidden "
               onClick={() => setOpen((v) => !v)}
               aria-label="Toggle menu"
             >
@@ -105,7 +105,7 @@ export default function Header() {
             </button>
 
             {/* Desktop nav */}
-            <nav className="hidden items-center gap-1 lg:flex">
+            <nav className="hidden  font-mont font-extrabold items-center gap-1 lg:flex ">
               {nav.map((i) => (
                 <NavItem key={i.to} to={i.to}>
                   {i.name}
